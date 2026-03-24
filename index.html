@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMT | TERMINATE TYPEWRITER</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Code+Pro:wght@300;500&display=swap');
+
+        :root {
+            --primary: #00ffcc;
+            --primary-glow: rgba(0, 255, 204, 0.6);
+            --bg: #050505;
+            --surface: #0a0a0a;
+            --danger: #ff003c;
+            --danger-glow: rgba(255, 0, 60, 0.5);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #ffffff;
+            font-family: 'Source Code Pro', monospace;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .terminal {
+            width: 90%;
+            max-width: 1000px;
+            background: var(--surface);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 30px var(--primary-glow);
+            padding: 40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid var(--primary);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin: 0;
+            text-shadow: 0 0 15px var(--primary-glow);
+            letter-spacing: 10px;
+        }
+
+        .status-msg {
+            color: var(--danger);
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 15px;
+            text-shadow: 0 0 10px var(--danger-glow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .instructions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin: 40px 0;
+            background: rgba(0, 255, 204, 0.03);
+            border: 1px dashed var(--primary);
+            padding: 30px;
+        }
+
+        .instruction-step {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .step-id {
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 45px;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .download-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 18px 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.4s;
+            letter-spacing: 2px;
+        }
+
+        .download-btn:hover {
+            background: var(--primary);
+            color: var(--bg);
+            box-shadow: 0 0 40px var(--primary);
+            transform: scale(1.05);
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #444;
+            border-top: 1px solid #222;
+            padding-top: 20px;
+        }
+
+        /* Matrix Rain Background Simulation */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="matrix-bg"></div>
+
+<div class="terminal">
+    <div class="header">
+        <h1>NMT</h1>
+        <div class="status-msg">NOW YOU'RE FREE FROM TYPEWRITER. WE DESTROYED IT.</div>
+    </div>
+
+    <div class="content">
+        <p>The manual labor of digital typing has been terminated. <strong>NoMoreTypewriter</strong> is the definitive solution for those who refuse to be bound by archaic speed tests. Developed by the elite coding crew at <strong>DarkFox Co.</strong>, NMT bridges the gap between machine efficiency and human stealth.</p>
+
+        <div class="instructions-grid">
+            <div class="instruction-step">
+                <span class="step-id">[01]</span>
+                <span>AUTHENTICATION: Launch NMT.exe and provide the license key found in the secure repository.</span>
+            </div>
+            <div class="instruction-step">
+                <span class="step-id">[02]</span>
+                <span>TARGETING: Use the dynamic selector to hook into the active browser window.</span>
+            </div>
+            <div class="instruction-step">
+                <span class="step-id">[03]</span>
+                <span>CALIBRATION: Set the typing delay. Use 0.05 for optimal stealth, or 0.0 for pure speed.</span>
+            </div>
+            <div class="instruction-step">
+                <span class="step-id">[04]</span>
+                <span>STEALTH: Define your error margin to mimic human mistakes and auto-corrections.</span>
+            </div>
+            <div class="instruction-step">
+                <span class="step-id">[05]</span>
+                <span>EXECUTION: Trigger "START" and focus the input field. Total destruction follows.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <button class="download-btn" onclick="genManual()">Download Offline Manual</button>
+    </div>
+
+    <div class="footer">
+        ©DARKFOX CO. 2026 | MISSION STATUS: SUCCESSFUL | BUILT BY THE BEST CODER IN THE CREW
+    </div>
+</div>
+
+<script>
+    function genManual() {
+        const content = `[NMT - NO MORE TYPEWRITER]\n[DEVELOPER: DARKFOX CO.]\n[STATUS: TYPEWRITER DESTROYED]\n\nINSTRUCTIONS:\n1. Execute NMT.exe\n2. Enter KLO046 when prompted.\n3. Hook the typewriter window.\n4. Set speed and stealth parameters.\n5. Run and focus field.\n\n©2026 DarkFox Co.`;
+        const blob = new Blob([content], {type: 'text/plain'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "NMT_MANUAL.txt";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+</script>
+
+</body>
+</html>
