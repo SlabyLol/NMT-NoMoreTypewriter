@@ -1,115 +1,82 @@
 import customtkinter as ctk
-import pyautogui
-import pytesseract
-from PIL import ImageGrab
-import threading
-import time
-import random
-import pygetwindow as gw
-import tkinter.messagebox as messagebox
-import os
-import subprocess
+import pyautogui, threading, time, os, random, json, subprocess, sys
+from flask import Flask, request
+import logging
 
-ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("blue")
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+app_bridge = Flask(__name__)
+received_text = ""
+
+@app_bridge.route('/inject', methods=['POST'])
+def inject():
+    global received_text
+    data = request.get_json()
+    received_text = data.get('text', '')
+    return {"status": "success"}
 
 class NMTApp(ctk.CTk):
     def __init__(self):
         super().__init__()
-
-        self.title("NMT - NoMoreTypewriter [FULL VERSION]")
-        self.geometry("500x800")
-
-        self.label = ctk.CTkLabel(self, text="NMT", font=("Orbitron", 40, "bold"), text_color="#00ffcc")
-        self.label.pack(pady=(20, 0))
-        
-        self.status_tag = ctk.CTkLabel(self, text="STATUS: UNLOCKED", font=("Arial", 10, "bold"), text_color="#ffcc00")
-        self.status_tag.pack(pady=(0, 20))
-
-        self.win_label = ctk.CTkLabel(self, text="TARGET WINDOW:", font=("Arial", 12, "bold"))
-        self.win_label.pack()
-        self.windows = [w.title for w in gw.getAllWindows() if w.title != ""]
-        self.window_selector = ctk.CTkOptionMenu(self, values=self.windows, fg_color="#1a1a1a", button_color="#00ffcc", button_hover_color="#00ccaa")
-        self.window_selector.pack(pady=10)
-
-        self.speed_label = ctk.CTkLabel(self, text="TYPING DELAY:", font=("Arial", 12, "bold"))
-        self.speed_label.pack()
-        self.speed_slider = ctk.CTkSlider(self, from_=0.0, to=0.3, progress_color="#00ffcc")
-        self.speed_slider.set(0.05)
-        self.speed_slider.pack(pady=10)
-
-        self.error_frame = ctk.CTkFrame(self, fg_color="#111", border_width=1, border_color="#333")
-        self.error_frame.pack(pady=20, padx=30, fill="x")
-        
-        self.error_check = ctk.CTkCheckBox(self.error_frame, text="HUMAN ERROR STEALTH", text_color="#00ffcc", command=self.toggle_error)
-        self.error_check.pack(pady=10)
-        self.error_entry = ctk.CTkEntry(self.error_frame, placeholder_text="Max errors", state="disabled", fg_color="#000")
-        self.error_entry.pack(pady=10)
-
-        self.start_btn = ctk.CTkButton(self, text="DESTROY TYPEWRITER", command=self.start_thread, fg_color="#28a745", hover_color="#218838", font=("Arial", 16, "bold"), height=50)
-        self.start_btn.pack(pady=10, padx=50, fill="x")
-
-        self.stop_btn = ctk.CTkButton(self, text="EMERGENCY STOP", command=self.stop_bot, fg_color="#dc3545", hover_color="#c82333")
-        self.stop_btn.pack(pady=5)
-
-        self.update_btn = ctk.CTkButton(self, text="CHECK FOR UPDATES", command=self.run_updater, fg_color="#555", font=("Arial", 12, "bold"))
-        self.update_btn.pack(pady=10)
-
-        self.feedback_btn = ctk.CTkButton(self, text="⭐ RATE & SUGGEST FEATURES", command=self.show_feedback, fg_color="#333", text_color="#fff")
-        self.feedback_btn.pack(pady=10)
-
-        self.footer = ctk.CTkLabel(self, text="©DARKFOX CO. 2026", font=("Arial", 10), text_color="gray")
-        self.footer.pack(side="bottom", pady=10)
-
+        self.title("NMT - TERMINATION HUB")
+        self.geometry("600x850")
         self.running = False
+        ctk.CTkLabel(self, text="NMT", font=("Impact", 60), text_color="#00ffcc").pack(pady=10)
+        self.tabs = ctk.CTkTabview(self, width=550, height=550)
+        self.tabs.pack(pady=10)
+        self.tabs.add("Injector")
+        self.tabs.add("Terminal")
+        self.tabs.add("System")
+        
+        self.js = """(function(){const t=document.querySelector('.text-to-type')?.innerText||document.body.innerText;fetch('http://localhost:5000/inject',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t})}).then(()=>console.log('NMT Bridge Active'));})();"""
+        self.txt = ctk.CTkTextbox(self.tabs.tab("Injector"), height=300, width=450)
+        self.txt.insert("0.0", self.js)
+        self.txt.pack(pady=10)
+        ctk.CTkButton(self.tabs.tab("Injector"), text="COPY INJECT CODE", command=self.cp, fg_color="#ff003c").pack(pady=10)
+        
+        self.st = ctk.CTkLabel(self.tabs.tab("Terminal"), text="STATUS: WAITING", text_color="#ffcc00", font=("Arial", 14, "bold"))
+        self.st.pack(pady=20)
+        self.sp = ctk.CTkSlider(self.tabs.tab("Terminal"), from_=0.01, to=0.5)
+        self.sp.set(0.08)
+        self.sp.pack(pady=10)
+        self.er = ctk.CTkSlider(self.tabs.tab("Terminal"), from_=0, to=15)
+        self.er.set(3)
+        self.er.pack(pady=10)
+        ctk.CTkButton(self.tabs.tab("Terminal"), text="EXECUTE", command=self.start, fg_color="#28a745", height=50).pack(pady=20)
+        
+        ctk.CTkButton(self.tabs.tab("System"), text="RUN SELF-UPDATER", command=self.upd, fg_color="#555").pack(pady=50)
+        
+        threading.Thread(target=lambda: app_bridge.run(port=5000), daemon=True).start()
 
-    def run_updater(self):
-        updater_exe = "nmt-u-c.exe"
-        if os.path.exists(updater_exe):
-            subprocess.Popen([updater_exe])
+    def cp(self):
+        import pyperclip
+        pyperclip.copy(self.js)
+
+    def upd(self):
+        if os.path.exists("nmt-u-c.exe"):
+            subprocess.Popen(["nmt-u-c.exe"])
             self.destroy()
-            exit()
-        else:
-            messagebox.showerror("Error", "Updater (nmt-u-c.exe) not found!")
+            sys.exit()
 
-    def show_feedback(self):
-        messagebox.showinfo("Feedback & Suggestions", "Send your ratings and feature ideas to:\ndarkfox.tobias@outlook.com")
+    def start(self):
+        if not self.running and received_text:
+            self.running = True
+            threading.Thread(target=self.run_engine, daemon=True).start()
 
-    def toggle_error(self):
-        state = "normal" if self.error_check.get() else "disabled"
-        self.error_entry.configure(state=state)
-
-    def start_thread(self):
-        if not self.running:
-            threading.Thread(target=self.type_logic, daemon=True).start()
-
-    def type_logic(self):
-        self.running = True
-        try:
-            target = self.window_selector.get()
-            win = gw.getWindowsWithTitle(target)[0]
-            win.activate()
-            time.sleep(2)
-            screenshot = ImageGrab.grab(bbox=(win.left, win.top, win.right, win.bottom))
-            text = pytesseract.image_to_string(screenshot).replace('\n', ' ').strip()
-            total = len(text)
-            delay = self.speed_slider.get()
-            max_err = int(self.error_entry.get()) if self.error_check.get() and self.error_entry.get() else 0
-            err_pos = random.sample(range(total), min(max_err, total))
-            for i, char in enumerate(text):
-                if not self.running: break
-                if i in err_pos:
-                    pyautogui.write(random.choice("asdfghjkl"))
-                    time.sleep(delay + 0.1)
-                    pyautogui.press('backspace')
-                    time.sleep(delay)
-                pyautogui.write(char)
-                time.sleep(delay * random.uniform(0.8, 1.2))
-        except: pass
+    def run_engine(self):
+        global received_text
+        self.st.configure(text="STATUS: TERMINATING", text_color="#00ffcc")
+        time.sleep(2)
+        for c in list(received_text):
+            if not self.running: break
+            if random.random() < (self.er.get() / 100):
+                pyautogui.write(random.choice("abcdefghijklmnopqrstuvwxyz"))
+                time.sleep(self.sp.get())
+                pyautogui.press("backspace")
+            pyautogui.write(c)
+            time.sleep(self.sp.get())
         self.running = False
-
-    def stop_bot(self):
-        self.running = False
+        self.st.configure(text="STATUS: DONE", text_color="#00ffcc")
 
 if __name__ == "__main__":
     app = NMTApp()
