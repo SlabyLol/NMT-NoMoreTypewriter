@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NMT | DARKFOX CO. TERMINATION</title>
+    <title>NMT | DARKFOX CO. DEPLOYMENT HUB</title>
     <style>
         :root {
             --neon-green: #00ffcc;
@@ -11,6 +11,7 @@
             --panel-bg: #0a0a0a;
             --alert-red: #ff003c;
             --text-gray: #b0b0b0;
+            --code-bg: #161616;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', 'Courier New', monospace; }
         body { background-color: var(--dark-bg); color: #fff; line-height: 1.6; display: flex; justify-content: center; padding: 60px 20px; }
@@ -18,20 +19,21 @@
         header { text-align: center; padding-bottom: 50px; border-bottom: 1px solid #222; margin-bottom: 50px; }
         h1 { font-size: 5rem; letter-spacing: 15px; color: var(--neon-green); text-shadow: 0 0 25px rgba(0, 255, 204, 0.5); margin-bottom: 10px; }
         .hero-text { color: var(--alert-red); font-size: 1.4rem; font-weight: bold; text-transform: uppercase; letter-spacing: 4px; border: 2px solid var(--alert-red); display: inline-block; padding: 15px 30px; margin: 20px 0; }
-        section { background: var(--panel-bg); padding: 40px; border-radius: 4px; border: 1px solid #1a1a1a; margin-bottom: 40px; position: relative; }
-        h2 { color: var(--neon-green); margin-bottom: 25px; text-transform: uppercase; font-size: 1.8rem; letter-spacing: 2px; border-bottom: 1px solid var(--neon-green); display: inline-block; padding-bottom: 5px; }
-        p { margin-bottom: 20px; font-size: 1.1rem; color: var(--text-gray); text-align: justify; }
-        .manifesto-box { border-left: 5px solid var(--neon-green); padding-left: 25px; margin: 30px 0; font-style: italic; color: #fff; font-size: 1.2rem; }
-        .highlight { color: var(--neon-green); font-weight: bold; }
+        section { background: var(--panel-bg); padding: 40px; border-radius: 4px; border: 1px solid #1a1a1a; margin-bottom: 40px; }
+        h2 { color: var(--neon-green); margin-bottom: 25px; text-transform: uppercase; font-size: 1.8rem; letter-spacing: 2px; border-left: 5px solid var(--neon-green); padding-left: 15px; }
+        p { margin-bottom: 20px; font-size: 1.1rem; color: var(--text-gray); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
-        .feature-card { background: #111; padding: 25px; border-radius: 4px; border-left: 3px solid var(--neon-green); }
-        .feature-card h3 { color: #fff; margin-bottom: 10px; text-transform: uppercase; font-size: 1.2rem; }
-        .repo-link { display: inline-block; margin-top: 40px; padding: 20px 50px; background: var(--neon-green); color: #000; text-decoration: none; font-weight: bold; font-size: 1.3rem; text-transform: uppercase; transition: 0.3s; box-shadow: 0 0 15px rgba(0, 255, 204, 0.3); }
-        .repo-link:hover { background: #fff; box-shadow: 0 0 30px var(--neon-green); transform: translateY(-3px); }
-        .instruction-list { list-style: none; }
-        .instruction-list li { margin-bottom: 15px; padding-left: 30px; position: relative; }
-        .instruction-list li::before { content: '>'; position: absolute; left: 0; color: var(--neon-green); font-weight: bold; }
-        footer { text-align: center; color: #444; font-size: 0.9rem; margin-top: 60px; letter-spacing: 2px; }
+        .card { background: #111; padding: 25px; border-radius: 4px; border: 1px solid #222; }
+        .card h3 { color: #fff; margin-bottom: 15px; text-transform: uppercase; font-size: 1.1rem; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .req-list, .inst-list { list-style: none; }
+        .req-list li, .inst-list li { margin-bottom: 10px; padding-left: 25px; position: relative; color: var(--text-gray); }
+        .req-list li::before { content: '●'; position: absolute; left: 0; color: var(--neon-green); }
+        .inst-list li::before { content: '>'; position: absolute; left: 0; color: var(--alert-red); }
+        .code-block { background: var(--code-bg); padding: 15px; border-radius: 4px; color: var(--neon-green); font-size: 0.9rem; border: 1px dashed #444; margin: 10px 0; }
+        .repo-link { display: inline-block; margin-top: 40px; padding: 20px 50px; background: var(--neon-green); color: #000; text-decoration: none; font-weight: bold; font-size: 1.3rem; text-transform: uppercase; transition: 0.3s; }
+        .repo-link:hover { background: #fff; box-shadow: 0 0 30px var(--neon-green); }
+        footer { text-align: center; color: #444; font-size: 0.9rem; margin-top: 60px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -42,48 +44,75 @@
         </header>
 
         <section>
-            <h2>The DarkFox Manifesto</h2>
-            <div class="manifesto-box">
-                "The manual labor of digital typing has been terminated. NoMoreTypewriter is the definitive solution for those who refuse to be bound by archaic speed tests. Developed by the elite coding crew at DarkFox Co., NMT bridges the gap between machine efficiency and human stealth."
-            </div>
-            <p>
-                In an era where every millisecond counts, manual input is a bottleneck. We watched the industry struggle with archaic systems and decided to intervene. <span class="highlight">NMT (NoMoreTypewriter)</span> was not just built; it was forged to dominate. By combining state-of-the-art Optical Character Recognition (OCR) with deep-level hardware simulation, we have created a tool that doesn't just type—it performs.
-            </p>
-            <p>
-                Our vision was clear: complete liberation. We destroyed the typewriter to make room for the god-mode of productivity. Whether you are facing rigorous digital evaluations or simply demand the highest level of automation, NMT is your silent partner in the shadows.
-            </p>
+            <h2>The Manifesto</h2>
+            <p>The manual labor of digital typing has been terminated. NoMoreTypewriter is the definitive solution for those who refuse to be bound by archaic speed tests. Developed by the elite coding crew at <span style="color:var(--neon-green)">DarkFox Co.</span>, NMT bridges the gap between machine efficiency and human stealth.</p>
         </section>
 
+        
+
         <section>
-            <h2>Core Functions</h2>
+            <h2>Pre-Deployment Requirements</h2>
+            <p>Before executing the NMT-Installer.py, ensure your workstation meets the following elite standards:</p>
             <div class="grid">
-                <div class="feature-card">
-                    <h3>Adaptive OCR Engine</h3>
-                    <p>Real-time text extraction from any active window with 99.9% accuracy, regardless of font or background contrast.</p>
+                <div class="card">
+                    <h3>Environment</h3>
+                    <ul class="req-list">
+                        <li>Windows 10 / 11 (x64)</li>
+                        <li>Python 3.10 or Higher</li>
+                        <li>Tesseract OCR Engine installed</li>
+                        <li>Active Internet Connection</li>
+                    </ul>
                 </div>
-                <div class="feature-card">
-                    <h3>Stealth Simulation</h3>
-                    <p>Proprietary human-error algorithms that inject natural delays and mistypes to bypass advanced behavior analysis.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Source-to-EXE Build</h3>
-                    <p>The system never relies on outdated binaries. Every client build is compiled locally from the latest GitHub source code.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Self-Healing Update</h3>
-                    <p>Integrated update client that monitors repository versioning and automatically re-compiles the environment on detection of new commits.</p>
+                <div class="card">
+                    <h3>System Path</h3>
+                    <p>Ensure Python and Tesseract are added to your System PATH variables. Verify with:</p>
+                    <div class="code-block">python --version<br>tesseract --version</div>
                 </div>
             </div>
         </section>
 
         <section>
-            <h2>Deployment Guide</h2>
-            <ul class="instruction-list">
-                <li>Execute the <span class="highlight">NMT-Installer.py</span> to initiate the environment handshake.</li>
-                <li>The system will automatically pull dependencies and generate the DarkFox identity assets (Icons/Shortcuts).</li>
-                <li>Local compilation via PyInstaller ensures a hardware-specific, high-performance binary.</li>
-                <li>Launch the environment and select your target window from the dynamic process list.</li>
-            </ul>
+            <h2>Installer Transparency</h2>
+            <p>What happens when you run <span style="color:var(--neon-green)">NMT-Installer.py</span>?</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>1. Dependency Injector</h3>
+                    <ul class="inst-list">
+                        <li>installs: customtkinter</li>
+                        <li>installs: pyautogui & pillow</li>
+                        <li>installs: pytesseract</li>
+                        <li>installs: pygetwindow</li>
+                        <li>installs: pyinstaller</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>2. Source Handshake</h3>
+                    <ul class="inst-list">
+                        <li>Fetches latest NMT.py</li>
+                        <li>Fetches latest nmt-u-c.py</li>
+                        <li>Syncs version.uvt</li>
+                        <li>Generates Branding (icon.ico)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card" style="margin-top:20px; border-left: 5px solid var(--alert-red);">
+                <h3>3. Binary Forge & OS Integration</h3>
+                <p>The installer triggers a local <strong>PyInstaller</strong> routine to forge unique EXE binaries. Finally, it creates a Desktop Shortcut and pins the environment to your Windows Taskbar for instant access.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Key Functions</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Human Stealth</h3>
+                    <p>Adaptive typing speeds and randomized error injection to remain undetectable.</p>
+                </div>
+                <div class="card">
+                    <h3>Local Compilation</h3>
+                    <p>No sketchy binaries from the web. You build the code locally from the source.</p>
+                </div>
+            </div>
         </section>
 
         <div style="text-align: center;">
@@ -91,7 +120,7 @@
         </div>
 
         <footer>
-            &copy; 2026 DARKFOX CO. | ENGINEERED BY THE ELITE CREW | ALL RIGHTS RESERVED
+            &copy; 2026 DARKFOX CO. | ENGINEERED BY THE ELITE CREW | TERMINATION COMPLETE
         </footer>
     </div>
 </body>
