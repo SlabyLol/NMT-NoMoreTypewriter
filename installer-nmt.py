@@ -6,7 +6,7 @@ from tkinter import messagebox
 import sys
 import requests
 
-def build_from_repo():
+def run_full_installation():
     try:
         packages = ["customtkinter", "pyautogui", "pytesseract", "pillow", "pygetwindow", "requests", "winshell", "pypiwin32", "pyinstaller"]
         for p in packages:
@@ -18,21 +18,18 @@ def build_from_repo():
         draw.ellipse([10, 10, 246, 246], outline=(0, 255, 204), width=12)
         img.save("icon.ico", format="ICO", sizes=[(256, 256)])
 
-        repo_base = "https://raw.githubusercontent.com/SlabyLol/NMT-NoMoreTypewriter/main/"
+        repo_url = "https://raw.githubusercontent.com/SlabyLol/NMT-NoMoreTypewriter/main/"
         
-        files = ["NMT.py", "nmt-u-c.py"]
-        for file in files:
-            print(f"Downloading {file}...")
-            r = requests.get(repo_base + file)
+        for file in ["NMT.py", "nmt-u-c.py", "version.uvt"]:
+            r = requests.get(repo_url + file)
             with open(file, "wb") as f:
                 f.write(r.content)
 
-        for file in files:
-            print(f"Compiling {file}...")
-            subprocess.run(["pyinstaller", "--onefile", "--noconsole", "--icon=icon.ico", file], check=True)
-            exe_name = file.replace(".py", ".exe")
-            if os.path.exists(f"dist/{exe_name}"):
-                shutil.copy(f"dist/{exe_name}", exe_name)
+        subprocess.run(["pyinstaller", "--onefile", "--noconsole", "--icon=icon.ico", "NMT.py"], check=True)
+        shutil.copy("dist/NMT.exe", "NMT.exe")
+
+        subprocess.run(["pyinstaller", "--onefile", "--noconsole", "--icon=icon.ico", "nmt-u-c.py"], check=True)
+        shutil.copy("dist/nmt-u-c.exe", "nmt-u-c.exe")
 
         import winshell
         from win32com.client import Dispatch
@@ -49,14 +46,19 @@ def build_from_repo():
         subprocess.run(["wscript.exe", vbs])
         os.remove(vbs)
 
-        messagebox.showinfo("DarkFox Co.", "Download and EXE Generation Complete!")
+        for folder in ["build", "dist"]:
+            if os.path.exists(folder): shutil.rmtree(folder)
+        for file in ["NMT.spec", "nmt-u-c.spec"]:
+            if os.path.exists(file): os.remove(file)
+
+        messagebox.showinfo("DarkFox Co.", "Installation Success! App, Updater, and Version file synced.")
     except Exception as e:
         messagebox.showerror("Error", str(e))
 
 root = tk.Tk()
-root.title("NMT CLOUD INSTALLER")
-root.geometry("400x250")
+root.title("NMT - OFFICIAL INSTALLER")
+root.geometry("400x300")
 root.configure(bg="#050505")
-tk.Label(root, text="NMT CLOUD FACTORY", fg="#00ffcc", bg="#050505", font=("Impact", 20)).pack(pady=20)
-tk.Button(root, text="DOWNLOAD & BUILD FROM REPO", command=build_from_repo, bg="#00ffcc", font=("Arial", 10, "bold")).pack(pady=20)
+tk.Label(root, text="NMT DEPLOYMENT", fg="#00ffcc", bg="#050505", font=("Impact", 25)).pack(pady=30)
+tk.Button(root, text="FULL INSTALL & BUILD", command=run_full_installation, bg="#00ffcc", font=("Arial", 12, "bold"), width=25).pack(pady=20)
 root.mainloop()
