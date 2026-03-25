@@ -1,9 +1,7 @@
 customtkinter
 pyautogui
 flask
-pygetwindow
 requests
-winshell
-pypiwin32
-pyinstaller
 pyperclip
+pygetwindow
+pyinstaller
