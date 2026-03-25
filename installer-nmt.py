@@ -19,17 +19,16 @@ def run_full_installation():
         img.save("icon.ico", format="ICO", sizes=[(256, 256)])
 
         repo_url = "https://raw.githubusercontent.com/SlabyLol/NMT-NoMoreTypewriter/main/"
-        
-        for file in ["NMT.py", "nmt-u-c.py", "version.uvt"]:
+        files = ["NMT.py", "nmt-u-c.py", "version.uvt"]
+        for file in files:
             r = requests.get(repo_url + file)
-            with open(file, "wb") as f:
-                f.write(r.content)
+            with open(file, "wb") as f: f.write(r.content)
 
-        subprocess.run(["pyinstaller", "--onefile", "--noconsole", "--icon=icon.ico", "NMT.py"], check=True)
-        shutil.copy("dist/NMT.exe", "NMT.exe")
-
-        subprocess.run(["pyinstaller", "--onefile", "--noconsole", "--icon=icon.ico", "nmt-u-c.py"], check=True)
-        shutil.copy("dist/nmt-u-c.exe", "nmt-u-c.exe")
+        for script in ["NMT.py", "nmt-u-c.py"]:
+            subprocess.run(["pyinstaller", "--onefile", "--noconsole", "--icon=icon.ico", script], check=True)
+            exe_name = script.replace(".py", ".exe")
+            if os.path.exists(f"dist/{exe_name}"):
+                shutil.copy(f"dist/{exe_name}", exe_name)
 
         import winshell
         from win32com.client import Dispatch
@@ -48,17 +47,15 @@ def run_full_installation():
 
         for folder in ["build", "dist"]:
             if os.path.exists(folder): shutil.rmtree(folder)
-        for file in ["NMT.spec", "nmt-u-c.spec"]:
-            if os.path.exists(file): os.remove(file)
 
-        messagebox.showinfo("DarkFox Co.", "Installation Success! App, Updater, and Version file synced.")
+        messagebox.showinfo("DarkFox Co.", "Full Suite Built & Pinned Successfully!")
     except Exception as e:
         messagebox.showerror("Error", str(e))
 
 root = tk.Tk()
-root.title("NMT - OFFICIAL INSTALLER")
+root.title("NMT - DEPLOYMENT")
 root.geometry("400x300")
 root.configure(bg="#050505")
-tk.Label(root, text="NMT DEPLOYMENT", fg="#00ffcc", bg="#050505", font=("Impact", 25)).pack(pady=30)
-tk.Button(root, text="FULL INSTALL & BUILD", command=run_full_installation, bg="#00ffcc", font=("Arial", 12, "bold"), width=25).pack(pady=20)
+tk.Label(root, text="NMT INSTALLER", fg="#00ffcc", bg="#050505", font=("Impact", 25)).pack(pady=30)
+tk.Button(root, text="BUILD ALL FROM SOURCE", command=run_full_installation, bg="#00ffcc", font=("Arial", 12, "bold"), width=25).pack(pady=20)
 root.mainloop()
