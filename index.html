@@ -3,139 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to NMT</title>
+    <title>NMT | NoMoreTypewriter</title>
     <style>
         :root {
-            --bg: #0d1117;
-            --card-bg: #161b22;
-            --accent: #00ffcc;
-            --text: #c9d1d9;
-            --text-dim: #8b949e;
+            --neon-green: #00ffcc;
+            --dark-bg: #050505;
+            --panel-bg: #0a0a0a;
+            --alert-red: #ff003c;
+            --text-gray: #b0b0b0;
+            --code-bg: #111111;
         }
-
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 90%;
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid #30363d;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            text-align: center;
-        }
-
-        h1 {
-            color: var(--accent);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .version {
-            font-size: 0.9rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            margin-bottom: 30px;
-            display: block;
-        }
-
-        p {
-            line-height: 1.6;
-            color: var(--text);
-            text-align: left;
-        }
-
-        .instruction-box {
-            background: rgba(0, 255, 204, 0.05);
-            border-left: 4px solid var(--accent);
-            padding: 20px;
-            margin: 30px 0;
-            text-align: left;
-        }
-
-        .instruction-box h2 {
-            margin-top: 0;
-            color: var(--accent);
-            font-size: 1.2rem;
-        }
-
-        ul {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        .download-btn {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--bg);
-            padding: 15px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 20px;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 255, 204, 0.3);
-        }
-
-        footer {
-            margin-top: 40px;
-            font-size: 0.8rem;
-            color: var(--text-dim);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', 'Courier New', monospace; }
+        body { background-color: var(--dark-bg); color: #fff; line-height: 1.6; display: flex; justify-content: center; padding: 60px 20px; }
+        .wrapper { max-width: 1100px; width: 100%; }
+        header { text-align: center; padding-bottom: 60px; border-bottom: 2px solid var(--neon-green); margin-bottom: 50px; }
+        h1 { font-size: 6rem; letter-spacing: 20px; color: var(--neon-green); text-shadow: 0 0 30px rgba(0, 255, 204, 0.6); margin-bottom: 10px; }
+        .hero-banner { color: var(--alert-red); font-size: 1.6rem; font-weight: bold; text-transform: uppercase; letter-spacing: 5px; border: 3px solid var(--alert-red); display: inline-block; padding: 20px 40px; margin: 25px 0; background: rgba(255, 0, 60, 0.05); }
+        section { background: var(--panel-bg); padding: 50px; border-radius: 4px; border: 1px solid #1a1a1a; margin-bottom: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+        h2 { color: var(--neon-green); margin-bottom: 30px; text-transform: uppercase; font-size: 2rem; letter-spacing: 3px; border-left: 8px solid var(--neon-green); padding-left: 20px; }
+        p { margin-bottom: 25px; font-size: 1.15rem; color: var(--text-gray); text-align: justify; }
+        .highlight { color: var(--neon-green); font-weight: bold; }
+        .manifesto-quote { border-left: 5px solid var(--alert-red); padding-left: 30px; margin: 40px 0; font-style: italic; color: #fff; font-size: 1.3rem; background: rgba(255, 255, 255, 0.02); padding: 30px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+        .card { background: #0d0d0d; padding: 30px; border-radius: 4px; border: 1px solid #222; transition: 0.3s; }
+        .card:hover { border-color: var(--neon-green); transform: translateY(-5px); }
+        .card h3 { color: var(--neon-green); margin-bottom: 20px; text-transform: uppercase; font-size: 1.2rem; letter-spacing: 1px; }
+        .list-style { list-style: none; }
+        .list-style li { margin-bottom: 12px; padding-left: 30px; position: relative; color: var(--text-gray); }
+        .list-style li::before { content: '>>'; position: absolute; left: 0; color: var(--neon-green); font-weight: bold; }
+        .installer-log { background: #000; padding: 25px; border: 1px dashed #444; color: #00ff00; font-size: 0.95rem; margin-top: 20px; }
+        .repo-btn { display: inline-block; margin-top: 50px; padding: 25px 60px; background: var(--neon-green); color: #000; text-decoration: none; font-weight: bold; font-size: 1.5rem; text-transform: uppercase; transition: 0.4s; letter-spacing: 2px; }
+        .repo-btn:hover { background: #fff; box-shadow: 0 0 50px var(--neon-green); }
+        footer { text-align: center; color: #333; font-size: 1rem; margin-top: 80px; text-transform: uppercase; letter-spacing: 5px; }
+        @media (max-width: 850px) { .grid { grid-template-columns: 1fr; } h1 { font-size: 3.5rem; } }
     </style>
 </head>
 <body>
+    <div class="wrapper">
+        <header>
+            <h1>NMT</h1>
+            <div class="hero-banner">NOW YOU'RE FREE FROM TYPEWRITER. WE DESTROYED IT.</div>
+        </header>
 
-<div class="container">
-    <h1>NoMoreTypewriter</h1>
-    <span class="version">Ultimate Stealth Edition</span>
+        <section>
+            <h2>Genesis & Mission</h2>
+            <div class="manifesto-quote">
+                "The manual labor of digital typing has been terminated. NoMoreTypewriter is the definitive solution for those who refuse to be bound by archaic speed tests. Developed by the elite coding crew at DarkFox Co., NMT bridges the gap between machine efficiency and human stealth."
+            </div>
+            <p>
+                In an era where every millisecond counts, manual input is a bottleneck designed to slow you down. We watched the industry struggle with archaic evaluation systems and decided to intervene. <span class="highlight">NMT (NoMoreTypewriter)</span> was created by <span class="highlight">Tobias</span> and the elite crew at <span style="color:var(--neon-green)">DarkFox Co.</span> to provide total liberation.
+            </p>
+            <p>
+                The typewriter is a relic of the past; we destroyed it to make room for the god-mode of productivity. NMT was forged for those who demand the highest level of automation, combining high-speed <span class="highlight">OCR text recognition</span> with advanced <span class="highlight">human-behavior simulation</span>. No license keys, no restrictions—just pure, unrestricted power for the crew.
+            </p>
+        </section>
 
-    <p>
-        Welcome to <strong>NMT</strong>, the most advanced automation tool designed specifically for digital typing environments. 
-        As the lead developer at DarkFox Co., I have built this tool to provide a seamless, human-like experience that bypasses traditional 
-        speed monitors while maintaining absolute precision.
-    </p>
+        <section>
+            <h2>Pre-Deployment Essentials</h2>
+            <p>To run the NMT suite, you must have the following environment prepared:</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>Software Requirements</h3>
+                    <ul class="list-style">
+                        <li>OS: Windows 10 / 11 (64-bit)</li>
+                        <li>Python: Version 3.10+ (Check 'Add to PATH' during install)</li>
+                        <li>OCR Engine: Tesseract OCR installed on your system</li>
+                        <li>Permissions: Administrator access for Taskbar pinning</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Source Components</h3>
+                    <p>The installer will fetch these files from the repository:</p>
+                    <ul class="list-style">
+                        <li>NMT.py (The Main Engine)</li>
+                        <li>nmt-u-c.py (The Self-Building Updater)</li>
+                        <li>version.uvt (Release Tracker)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-    <div class="instruction-box">
-        <h2>How to use NMT:</h2>
-        <ul>
-            <li><strong>Activation:</strong> Run the executable and enter your valid license key to unlock the core engine.</li>
-            <li><strong>Selection:</strong> Use the "Target Window" menu to select your browser or typing application.</li>
-            <li><strong>Configuration:</strong> Adjust the typing delay to match your desired speed. Lower values increase the pace.</li>
-            <li><strong>Stealth Mode:</strong> Enable "Human Errors" to simulate realistic typing mistakes and automatic corrections.</li>
-            <li><strong>Execution:</strong> Click "START NMT" and focus the input field within 3 seconds.</li>
-        </ul>
+        <section>
+            <h2>Official Execution Guide</h2>
+            <p>Follow these steps to deploy the DarkFox Co. environment correctly:</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>Step 1: Handshake</h3>
+                    <p>Download the <span class="highlight">NMT-Installer.py</span> from the repository link below. Place it in a dedicated folder.</p>
+                </div>
+                <div class="card">
+                    <h3>Step 2: Dependency Injection</h3>
+                    <p>Run the installer. It will automatically detect your environment and install <span class="highlight">customtkinter, pyautogui, pytesseract,</span> and <span class="highlight">pyinstaller</span>.</p>
+                </div>
+                <div class="card">
+                    <h3>Step 3: Binary Forge</h3>
+                    <p>The installer downloads the raw source code and compiles it locally. <span class="highlight">NMT.exe</span> and <span class="highlight">nmt-u-c.exe</span> are generated specifically for your hardware.</p>
+                </div>
+                <div class="card">
+                    <h3>Step 4: Integration</h3>
+                    <p>Once the build is complete, check your Desktop for the <span class="highlight">NMT Shortcut</span> and your Taskbar for the pinned icon. Deployment is finished.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tactical Technical Functions</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Zero-Key Access</h3>
+                    <p>We removed all archaic license barriers. NMT is fully unlocked for the DarkFox Co. community.</p>
+                </div>
+                <div class="card">
+                    <h3>Stealth Randomization</h3>
+                    <p>Proprietary human-error simulation injects natural delays and mistypes to bypass advanced behavior analysis and anti-cheat monitors.</p>
+                </div>
+                <div class="card">
+                    <h3>Local Compilation</h3>
+                    <p>Maximum security through local builds. No suspicious binaries—you build the EXE from the raw source code provided by the crew.</p>
+                </div>
+                <div class="card">
+                    <h3>Self-Healing System</h3>
+                    <p>The integrated Update Client pulls new commits and re-forges the entire suite without manual intervention.</p>
+                </div>
+            </div>
+        </section>
+
+        <div style="text-align: center;">
+            <a href="https://github.com/SlabyLol/NMT-NoMoreTypewriter" class="repo-btn">ACCESS REPOSITORY</a>
+        </div>
+
+        <footer>
+            TERMINATION BY DARKFOX CO. &copy; 2026 | BUILT BY TOBIAS & THE ELITE CREW
+        </footer>
     </div>
-
-    <p>
-        Please ensure you have the Tesseract OCR engine installed on your system for the visual recognition to function correctly.
-    </p>
-
-    <a href="instructions.txt" download class="download-btn">Download Instructions (.txt)</a>
-
-    <footer>
-        ©DarkFox Co. 2026 | Developed by the best coder in the crew.
-    </footer>
-</div>
-
 </body>
 </html>
